@@ -48,6 +48,7 @@ class WS {
             })
             // ws.send(message);
         });
+        return self
     }
     broadcast(message) {
         this.server.clients.forEach(function each(client) {
@@ -56,14 +57,8 @@ class WS {
             }
         });
         console.log(this.tag + ' ---> %s to all', message);
+        return this
     }
 }
 
 module.exports = WS
-
-
-let ws = new WS()
-ws.start()
-setTimeout(() => {
-    ws.broadcast("HELLO")
-}, 6000)

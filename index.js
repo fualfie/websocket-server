@@ -1,2 +1,2 @@
 exports = module.exports = {};
-exports.WS = require('./ws-server')
+exports.WebSocket = require('./ws-server')
