@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket</title>
+    <script src="./ws-client.js"></script>
+</head>
+
+<body>
+    <h1>Web Socket</h1>
+
+    <fieldset>
+        <legend>Online</legend>
+        <div>Connection: <span id="online"></span></div>
+    </fieldset>
+    <fieldset>
+        <legend>Send</legend>
+        <input type="text" id="message"><button onclick="send()">Send</button>
+    </fieldset>
+    <fieldset>
+        <legend>Received</legend>
+        <div id="received"></div>
+    </fieldset>
+
+    <script>
+        var w = WS('localhost', 3993, (data, online, send) => {
+            let div = document.createElement('div')
+            div.innerText = data
+            document.getElementById('received').appendChild(div)
+            document.getElementById('online').innerText = online
+        }, 3)
+
+        function send() {
+            w.send(document.getElementById('message').value)
+        }
+    </script>
+
+</body>
+
+</html>

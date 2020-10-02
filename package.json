@@ -1,0 +1,17 @@
+{
+  "name": "@fualfie/websocket-server",
+  "version": "1.0.0",
+  "description": "websocket server",
+  "main": "index.js",
+  "keywords": [],
+  "homepage": "https://github.com/fualfie/websocket-server",
+  "author": "fualfie",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fualfie/websocket-server.git"
+  },
+  "dependencies": {
+    "ws": "^7.3.1"
+  }
+}
