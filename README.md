@@ -7,7 +7,7 @@
 ## create on server
 ```js
 //setup
-let ws = new WS()
+let ws = new WebSocket()
 ws.start()
 //broadcating
 ws.broadcast('hello world')
