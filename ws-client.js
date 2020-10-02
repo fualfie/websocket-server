@@ -1,7 +1,7 @@
 var WS = function (host, port, handler, reconnect) {
     host = host || 'localhost'
     port = port || 3993
-    var times = 0
+    let times = 0
     var socket, send, online, timer;
     if (!window.WebSocket) window.WebSocket = window.MozWebSocket;
     if (window.WebSocket) {
@@ -19,12 +19,12 @@ var WS = function (host, port, handler, reconnect) {
                 }
                 if (handler) handler(message, online, send)
             };
-            socket.onerror = function (error) { console.log('connection failed') };
             socket.onclose = function (event) {
                 timer = setTimeout(function () {
-                    connect();
-                    if (reconnect) {
-                        if (reconnect <= times) clearTimeout(timer)
+                    if (reconnect && reconnect <= times) {
+                        clearTimeout(timer)
+                    }else{
+                        connect();
                         times++
                     }
                 }, 2000);
@@ -35,5 +35,5 @@ var WS = function (host, port, handler, reconnect) {
         }
         connect()
     }
-    return { send }
+    return { send, connect }
 }
