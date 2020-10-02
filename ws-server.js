@@ -5,13 +5,13 @@ class WS {
         this.host = host
         this.port = port
         this.online = {}
-        this.tag = '[ws]'
+        this.tag = '[WS]'
     }
     start() {
         let self = this
         self.server = new WebSocket.Server({ port: self.port, host: self.host }, () => {
-            self.tag = `[ws://${self.server.address().address}:${self.server.address().port}]`
-            console.log(self.tag, 'Server start')
+            self.tag = `[WS:${self.server.address().port}]`
+            console.log(self.tag, `Server start on ${self.server.address().address}:${self.server.address().port}`)
         });
 
         self.server.on('open', function open() {
@@ -32,14 +32,13 @@ class WS {
             // let ip = req.connection.remoteAddress;
             let port = req.connection.remotePort;
             let clientName = ip + ':' + port;
-            console.log(self.tag + ' <--> %s', clientName)
-
+            console.log(`${self.tag} <--> ${clientName}`);
             self.online[clientName] = clientName
 
             self.broadcast('online->' + Object.keys(self.online).length)
 
             ws.on('message', function incoming(message) {
-                console.log(self.tag + ' <--- %s from %s', message, clientName);
+                console.log(`${self.tag} <--- ${message} from ${clientName}`);
                 self.broadcast(message)
             });
             ws.on('close', () => {
@@ -56,7 +55,7 @@ class WS {
                 client.send(message);
             }
         });
-        console.log(this.tag + ' ---> %s to all', message);
+        console.log(`${this.tag} ---> ${message}`);
         return this
     }
 }

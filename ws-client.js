@@ -13,8 +13,8 @@ var WS = function (host, port, handler, reconnect) {
             socket.onopen = function (event) { };
             socket.onmessage = function (event) {
                 let message = event.data
-                if (message && message.indexOf('->') > -1) {
-                    if (message.indexOf('online') > -1) online = message.split('->')[1]
+                if (message && message.toString().indexOf('->') > -1) {
+                    if (message.toString().indexOf('online') > -1) online = message.toString().split('->')[1]
                     message = ''
                 }
                 if (handler) handler(message, online, send)
