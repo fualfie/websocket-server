@@ -1,17 +1,18 @@
 const WebSocket = require('ws');
 
 class WS {
-    constructor(port = 3993, host = '0.0.0.0') {
+    constructor(port = 3993, host = '0.0.0.0', log = false) {
         this.host = host
         this.port = port
         this.online = {}
         this.tag = '[WS]'
+        this.log = log
     }
     start() {
         let self = this
         self.server = new WebSocket.Server({ port: self.port, host: self.host }, () => {
             self.tag = `[WS:${self.server.address().port}]`
-            console.log(`${self.tag} Server start on ${self.server.address().address}:${self.server.address().port}`)
+            console.log(`Websocket Server start on ${self.server.address().address}:${self.server.address().port}`)
         });
 
         self.server.on('open', function open() {
@@ -32,13 +33,13 @@ class WS {
             // let ip = req.connection.remoteAddress;
             let port = req.connection.remotePort;
             let clientName = ip + ':' + port;
-            console.log(`${self.tag} <--> ${clientName}`);
+            if (self.log) console.log(`${self.tag} <--> ${clientName}`);
             self.online[clientName] = clientName
 
             self.broadcast('online->' + Object.keys(self.online).length)
 
             ws.on('message', function incoming(message) {
-                console.log(`${self.tag} <--- ${message} from ${clientName}`);
+                if (self.log) console.log(`${self.tag} <--- ${message} from ${clientName}`);
                 self.broadcast(message)
             });
             ws.on('close', () => {
@@ -55,7 +56,7 @@ class WS {
                 client.send(message);
             }
         });
-        console.log(`${this.tag} ---> ${message}`);
+        if (this.log) console.log(`${this.tag} ---> ${message}`);
         return this
     }
 }
