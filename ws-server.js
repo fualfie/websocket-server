@@ -11,7 +11,7 @@ class WS {
         let self = this
         self.server = new WebSocket.Server({ port: self.port, host: self.host }, () => {
             self.tag = `[WS:${self.server.address().port}]`
-            console.log(self.tag, `Server start on ${self.server.address().address}:${self.server.address().port}`)
+            console.log(`${self.tag} Server start on ${self.server.address().address}:${self.server.address().port}`)
         });
 
         self.server.on('open', function open() {
